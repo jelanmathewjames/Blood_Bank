@@ -1,0 +1,32 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'blood_home.css' %}" type="text/css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main_body">
+        <p class="heading">Blood Donation</p>
+        <div class="form">
+            <form action="add-donor" method="POST">
+                {% csrf_token %}
+                <p class="regid">Registration form</p>
+                <p>Name</p>
+                <input type="text" name="name" >
+                <p>Blood Group</p>
+                <input type="text" name="blood_group" class="blood_group">
+                <p>Age</p>
+                <input type="number" name="age" class="age">
+                <p>Phone Number</p>
+                <input type="number" name="phone_number"><br>
+                <br>
+                <input type="submit" value="ADD DATA">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

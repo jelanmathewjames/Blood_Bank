@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'blood_signup.css' %}" type="text/css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main_body">
+        <p class="heading">Blood Bank</p>
+        <form action="signin" class="form" method="POST">
+            {% csrf_token %}
+            <p style="font-size: 30px;">Sign In</p>
+            <p>First Name</p>
+            <input type="text" name="first_name">
+            <p>Last Name</p>
+            <input type="text" name="last_name">
+            <p>Mail Address</p>
+            <input type="email" name="email">
+            <p>Username</p>
+            <input type="text" name="username">
+            <p>Password</p>
+            <input type="password" name="password1">
+            <p>Confirm Password</p>
+            <input type="password" name="password2">
+            <br>
+            <br>
+            <input type="submit" value="Sign-up" class="signup">
+
+        </form>
+        <div style="padding-left: 400px;">
+            {% for messages in messages %}
+            <h3>{{messages}}</h3>
+            {% endfor %}
+        </div>
+    </div>
+    
+</body>
+</html>
