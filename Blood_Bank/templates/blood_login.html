@@ -1,37 +1,72 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'blood_login.css' %}" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <body>
-    
-    <div class="main_body">
-        <div style="padding-left: 800px; font-size:25px; padding-top:30px; text-decoration:none;">
-            <li><a href="signin">Sign In</a></li>
-        </div>
-        <p class="heading">Blood Bank</p>
-        <form action="login" class="form" method="POST">
-            {% csrf_token %}
-            <p style="font-size: 30px;">Log In</p>
-            <p>User Name</p>
-            <input type="text" name="user_name">
-            <p>Password</p>
-            <input type="password" name="password">
-            <br>
-            <br>
-            <input type="submit" value="Log-In" class="login">
-        </form>
-        <div style="padding-left: 400px;">
-            {% for messages in messages %}
-            <h3>{{messages}}</h3>
-            {% endfor %}
-        </div>
+  <div style="background-image:url('https://wallpapercave.com/wp/wp4323537.png'); height:620px;" class="col-lg-12 col-12">
+    <div class="list-group col-lg-2 col-12">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link active mr-0" style="font-size:25px; font-weight:bold"href="signin">Sign In</a>
+        </li>
+      </ul>
     </div>
-    
+    <div class="mx-auto col-10 col-lg-4" style="border-style:solid; border-width:thick; border-color:red; border-radius:30px; height:400px; padding-top:50px; margin-top:20px;">
+      <form action="login">
+        {% csrf_token %}
+        <div class="form-group mx-auto col-lg-8 col-8"">
+          <label for="username">User Name</label>
+          <input type="text" id="username" class="form-control" aria-describedby="emailHelp" placeholder="User Name" name="username">
+        </div>
+        <div class="form-group mx-auto col-lg-8 col-8"">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="form-control" placeholder="Password"  autocomplete="on" name="password">
+        </div>
+        <div class="mx-auto col-lg-2 col-6">
+          <button type="button" id="btn1" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+
+  </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script >
+  $('#btn1').click(function(){
+    var username = $('#username').val()
+    var password = $('#password').val()
+    console.log(username,password)
+    var data = {
+      'csrfmiddlewaretoken':'{{csrf_token}}',
+      'username': username,
+      'password': password,
+    }
+    if(username == ''){
+      alert("Enter the valid User")
+    }else if(password == ''){
+      alert("Enter the valid password")
+    }else{
+      $.ajax({
+        url:'/login',
+        method:'POST',
+        data:data,
+        dataType: 'json',
+        success:function(data){
+          if(data.success){
+            alert('user logged in')
+            window.location.replace('display')
+          }else{
+            alert('user is not authenticated')
+          }
+        }
+      })
+    }
+  })
+</script>
 </body>
 </html>

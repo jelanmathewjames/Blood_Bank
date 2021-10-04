@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from Blood_bank_app.models import DonorDetails
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from django.http import JsonResponse
 # Create your views here.
 def home(request):
     return redirect('login')
@@ -10,15 +11,21 @@ def home(request):
 def log_in(request):
 
     if request.method == 'POST':
-        username = request.POST['user_name']
+        username = request.POST['username']
         password = request.POST['password']
         user = auth.authenticate(username=username,password=password)
         if user is not None:
-            auth.login(request,user)
-            return redirect("display")
+            session_valid = True
+            request.session['session_valid'] = session_valid
+            return JsonResponse(
+                {'success':True},
+                safe = False
+            )
         else:
-            messages.info(request,'Invalid Credentials')
-            return redirect('login')
+            return JsonResponse(
+                {'success':False},
+                safe = False
+            )
     else:
         return render(request,'blood_login.html')
 
@@ -53,26 +60,28 @@ def sign_in(request):
 
 
 def display(request):
-
-    details = DonorDetails.objects.all()
-    return render(request,'Blood_data.html',{'data':details})
+    if 'session_valid' in request.session :
+        details = DonorDetails.objects.all()
+        return render(request,'Blood_data.html',{'data':details})
 
 
 def adddonor(request):
-
-    if request.method == 'POST':
-        name = request.POST['name']
-        blood_group = request.POST['blood_group']
-        age = request.POST['age']
-        phone_number = request.POST['phone_number']
-        details = DonorDetails.objects.create(name=name,blood_group=blood_group,age=age,phone_number=phone_number)
-        details.save()
-        return redirect('display')
-    else:
-        return render(request, 'Blood_home.html')
+    if 'session_valid' in request.session :
+        if request.method == 'POST':
+            name = request.POST['name']
+            blood_group = request.POST['blood_group']
+            age = request.POST['age']
+            phone_number = request.POST['phone_number']
+            details = DonorDetails.objects.create(name=name,blood_group=blood_group,age=age,phone_number=phone_number)
+            details.save()
+            return redirect('display')
+        else:
+            return render(request, 'Blood_home.html')
 
 
 def logout(request):
-    
-    auth.logout(request)
+    try:
+        del request.session['password']
+    except KeyError:
+        pass
     return redirect('login')
