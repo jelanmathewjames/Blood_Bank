@@ -6,19 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Document</title>
+    <link rel="shortcut icon" href="#">
 </head>
 <body>
   <div style="background-image:url('https://wallpapercave.com/wp/wp4323537.png'); height:620px;" class="col-lg-12 col-12">
-    <div class="list-group col-lg-2 col-12">
-      <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link active mr-0" style="font-size:25px; font-weight:bold"href="signin">Sign In</a>
-        </li>
-      </ul>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <p class="nav-link" style="font-size: 30px;font-weight:bolder; color:blue;">Blood Bank</p>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="color:blue;" href="signup">Sign Up</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
     <div class="mx-auto col-10 col-lg-4" style="border-style:solid; border-width:thick; border-color:red; border-radius:30px; height:400px; padding-top:50px; margin-top:20px;">
-      <form action="login">
+      <form>
         {% csrf_token %}
+        <p id="warning" class="col-lg-10 col-11 mx-auto" style="color:red;font-weight:bold;"> </p>
+        <div class="col-lg-8 col-8 ml-auto ">
+          <p style="color:black; font-size:30px; font-weight:bolder;">Log In</p><br>
+        </div>
         <div class="form-group mx-auto col-lg-8 col-8"">
           <label for="username">User Name</label>
           <input type="text" id="username" class="form-control" aria-describedby="emailHelp" placeholder="User Name" name="username">
@@ -31,7 +45,7 @@
           <button type="button" id="btn1" class="btn btn-primary">Submit</button>
         </div>
       </form>
-
+    </div>
   </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -40,28 +54,29 @@
   $('#btn1').click(function(){
     var username = $('#username').val()
     var password = $('#password').val()
-    console.log(username,password)
     var data = {
       'csrfmiddlewaretoken':'{{csrf_token}}',
       'username': username,
       'password': password,
     }
     if(username == ''){
-      alert("Enter the valid User")
+      var alert = 'User Name field cannot be empty'
+      $('#warning').text(alert)
     }else if(password == ''){
-      alert("Enter the valid password")
+      var alert = 'Password field cannot be empty'
+      $('#warning').text(alert)
     }else{
       $.ajax({
         url:'/login',
         method:'POST',
         data:data,
-        dataType: 'json',
+        dataType:'json',
         success:function(data){
           if(data.success){
-            alert('user logged in')
             window.location.replace('display')
           }else{
-            alert('user is not authenticated')
+            var alert = 'User is Not Authenticated'
+            $('#warning').text(alert)
           }
         }
       })

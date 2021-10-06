@@ -1,36 +1,100 @@
-{% load static %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'blood_home.css' %}" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Document</title>
+    <link rel="shortcut icon" href="#">
 </head>
 <body>
-    <div class="main_body">
-        <p class="heading">Blood Donation</p>
-        <div class="form">
-            <form action="add-donor" method="POST">
-                {% csrf_token %}
-                <p class="regid">Registration form</p>
-                <p>Name</p>
-                <input type="text" name="name" >
-                <p>Blood Group</p>
-                <input type="text" name="blood_group" class="blood_group">
-                <p>Age</p>
-                <input type="number" name="age" class="age">
-                <p>Phone Number</p>
-                <input type="number" name="phone_number"><br>
-                <br>
-                <input type="submit" value="ADD DATA">
-            </form>
-        </div>
+    <div style="background-image:url('https://wallpapercave.com/wp/wp4323537.png'); height:800px;" class="col-lg-12 col-12">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <p class="nav-link" style="font-size: 30px;font-weight:bolder;color:blue;">Blood Bank</p>
+      </nav>
+        <div class="mx-auto col-10 col-lg-4" style="color:rgb(0, 0, 66);border-style:solid; border-width:thick; border-color:red; border-radius:30px; height:630px; padding-top:50px; margin-top:20px;">
+          <form action="add-donor" method="POST" >
+            {% csrf_token %}
+            <p class="col-lg-10 col-11 mx-auto" id="warning" style="color:red;font-weight:bold;"></p>
+            
+            <div class="col-lg-10 col-10 ml-auto ">
+              <p style="color:black; font-size:30px; font-weight:bolder;">Registration Form</p><br>
+            </div>
+
+            <div class="form-group mx-auto col-lg-8 col-8"">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Name">
+            </div>
+
+            <div class="form-group mx-auto col-lg-8 col-8"">
+              <label for="blood_group">Blood Group</label>
+              <input type="text" class="form-control" id="blood_group" aria-describedby="emailHelp" placeholder="Blood Group">
+            </div>
+
+            <div class="form-group mx-auto col-lg-8 col-8"">
+              <label for="age">Age</label>
+              <input type="number" class="form-control" id="age" aria-describedby="emailHelp" placeholder="Age">
+            </div>
+
+            <div class="form-group mx-auto col-lg-8 col-8"">
+              <label for="phone_number">Phone Number</label>
+              <input type="number" class="form-control" id="phone_number" aria-describedby="emailHelp" placeholder="Phone Number">
+            </div>
+
+            <div class="mx-auto col-lg-2 col-6">
+              <button type="button" class="btn btn-primary" id="btn1">Submit</button>
+            </div>
+          </form>
+      </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+  $('#btn1').click(function (){
+    var name = $('#name').val()
+    var blood_group = $('#blood_group').val()
+    var age = $('#age').val()
+    var phone_number = $('#phone_number').val() 
+    var data = {
+      'csrfmiddlewaretoken':'{{csrf_token}}',
+      'name': name,
+      'blood_group': blood_group,
+      'age': age,
+      'phone_number': phone_number,
+    }
+    if(name==''){
+      var alert = "Name field cannot be empty"
+      $('#warning').text(alert)
+    }else if(blood_group==''){
+      var alert = "Blood Group field cannot be empty"
+      $('#warning').text(alert)
+    }else if(age == ''){
+      var alert = "Age field cannot be empty"
+      $('#warning').text(alert)
+    }else if(phone_number == ''){
+      var alert = "Phone Number field cannot be empty"
+      $('#warning').text(alert)
+    }
+    $.ajax({
+      url:'/add-donor',
+      method:'POST',
+      data:data,
+      dataType:'json',
+      success:function(data){
+        if(data.success == 'true'){
+          window.location.replace('display')
+        }else if(data.success == 'name_error'){
+          var alert = 'Donor with same Name exists'
+          $('#warning').text(alert)
+        }else if(data.success == 'phonenumber_error'){
+          var alert = 'Donor with same Phone Numer exists'
+          $('#warning').text(alert)
+        }
+      }
+    })
+  })
+</script>
 </body>
 </html>

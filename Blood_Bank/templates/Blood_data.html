@@ -9,38 +9,63 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'blood_data.css' %}" type="text/css">
     <title>Document</title>
+    <link rel="shortcut icon" href="#">
 </head>
 <body>
-    <div class="main_body" >
-        <p class="heading">Blood Bank Data Table</p>
-        <div style="padding-left: 900px; font-size:25px; color:white; text-decoration:none;">
-            <ul>
-                <li><a href="add-donor">Add Donor</a></li>
-                <li><a href="logout">Log Out</a></li>
-            </ul>
-        </div>
+    <div style="background-image:url('https://wallpapercave.com/wp/wp4323537.png'); height:auto;" class="col-lg-12 col-12">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <p class="nav-link" style="font-size: 30px;font-weight:bolder;color:blue">Blood Bank</p>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" style="color:blue;" href="add-donor">Add Donor</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color:blue;" href="logout">Log Out</a>
+                  </li>
+              </ul>
+            </div>
+        </nav>
         <div>
-            <div>
-                <table border="2px" style="border-color:black;" id="myTable" >
-                    <thead style="font-size: 25px; font-family:DejaVu Sans Mono, monospace;">
+            <div class="col-lg-10 col-10 ml-auto">
+                <p style="color:black; font-size:30px; font-weight:bolder;">Registration Form</p><br>
+            </div>
+            <div class="table-responsive col-lg-12 col-12">
+                <table border="2px" id="myTable" class="table">
+                    <thead style="font-size: 25px; font-family:DejaVu Sans Mono, monospace; background:rgb(255, 202, 132);">
                         <tr height="50">
-                            <th width="250">Name</th>
-                            <th width="200">Blood Group</th>
-                            <th width="200">Age</th>
-                            <th width="200">Phone Number</th>
+                            <th>Name</th>
+                            <th>Blood Group</th>
+                            <th>Age</th>
+                            <th>Phone Number</th>
                         </tr>
                     </thead>
-                    <tbody style="font-size: 18px; font-family:DejaVu Sans Mono, monospace;">
+                    <tbody style="font-size: 18px; font-family:DejaVu Sans Mono, monospace; background:rgb(255, 223, 223);">
                         {% for data in data %}
                         <tr height="30">
-                            <td width="250">{{data.name}}</td>
-                            <td width="200">{{data.blood_group}}</td>
-                            <td width="200">{{data.age}}</td>
-                            <td width="200">{{data.phone_number}}</td>
+                            <td>{{data.name}}</td>
+                            <td>{{data.blood_group}}</td>
+                            <td>{{data.age}}</td>
+                            <td>{{data.phone_number}}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
             </div>
         </div>
     </div>
